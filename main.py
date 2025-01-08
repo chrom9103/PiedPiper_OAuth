@@ -8,7 +8,7 @@ intents = discord.Intents.all()
 intents.message_content = True
 
 # config.jsonの読み込み
-with open('.gitignore\config.json') as config_file:
+with open('.gitignore/config.json') as config_file:
     config = json.load(config_file)
     token = config["token"]  # config.jsonからトークンを取得
 
