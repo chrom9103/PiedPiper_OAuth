@@ -39,7 +39,7 @@ async def on_member_join(member):
         print(f"Role '{role_name}' was not been found.")
 
 @bot.command()
-async def ping(ctx): # mDnを実行
+async def ping(ctx):
     if ctx.author.bot:
         return
     await ctx.reply("pong")
