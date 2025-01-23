@@ -1,1 +1,1 @@
-# PiPi_discordBot
+.env

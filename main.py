@@ -1,16 +1,13 @@
+import os
 import discord
 from discord.ext import commands
-import random
-import json
-import os
+from dotenv import load_dotenv
 
 intents = discord.Intents.all()
 intents.message_content = True
 
-# config.jsonの読み込み
-with open('.gitignore\config.json') as config_file:
-    config = json.load(config_file)
-    token = config["token"]  # config.jsonからトークンを取得
+load_dotenv('.env')
+token = os.getenv("TOKEN")
 
 bot = commands.Bot(
     command_prefix="?",
@@ -22,22 +19,30 @@ bot = commands.Bot(
 async def on_ready():
     print("Cleared to take off!")
 
+@bot.event
+async def on_member_join(member):
+    role_name = "member"  # サーバー内で設定したいロール名
+    guild = member.guild
+
+    role = discord.utils.get(guild.roles, name=role_name)
+    
+    if role is not None:
+        try:
+            # ロールを付与
+            await member.add_roles(role)
+            print(f"Role {role_name} has been granted to {member.name}")
+        except discord.Forbidden:
+            print("Permission error: role cannot be granted.")
+        except discord.HTTPException as e:
+            print(f"HTTP error: {e}")
+    else:
+        print(f"Role '{role_name}' was not been found.")
+
 @bot.command()
-async def dice(ctx, m: int, n: int): # mDnを実行
+async def ping(ctx): # mDnを実行
     if ctx.author.bot:
         return
-
-    if m < 1:
-        await ctx.reply("1回より多く振ってください")
-        return
-    if n < 1:
-        await ctx.reply("1より大きなダイスにしてください")
-        return
-
-    total = 0
-    for i in range(m):
-        total += random.randint(1, n)
-    await ctx.reply(total)
+    await ctx.reply("pong")
 
 # ボットの実行
 bot.run(token)
