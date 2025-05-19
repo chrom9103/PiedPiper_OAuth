@@ -19,7 +19,7 @@ bot = commands.Bot(
 @bot.event
 async def on_ready():
     print("Cleared to take off!")
-    # await save_member_list()
+    await save_member_list()
 
 @bot.event
 async def on_member_join(member):
@@ -64,7 +64,7 @@ async def on_member_join(member):
         print(f"File '{member_list_file}' not found.") 
 
 async def save_member_list():
-    target_guild_id = 1005875545885646938
+    target_guild_id = 1304058364560543815
     target_role_name = "member"
     member_list_file = "member_list.txt"
 
