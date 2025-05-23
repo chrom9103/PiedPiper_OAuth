@@ -49,7 +49,7 @@ async def mkivt(ctx: discord.Interaction):
     await ctx.response.send_message(f"New invite link: {invite.url}")
     await ctx.followup.send(f"Invite ID:`{invite.id}` was created by {ctx.user.name}")
 
-    with open("logs/log_list.txt", "a") as log_file:
+    with open("datas/invite_list.txt", "a") as log_file:
         log_file.write(f"Invite ID: {invite.id}. Author: {ctx.user.name}\n")
 
 

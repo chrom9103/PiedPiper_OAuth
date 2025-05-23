@@ -23,7 +23,7 @@ async def on_ready():
 
 @bot.event
 async def on_member_join(member):
-    member_list_file = "member_list.txt"
+    member_list_file = "datas/member_list.txt"
     guild = member.guild
 
     try:
@@ -73,7 +73,7 @@ async def save_member_list():
         role = discord.utils.get(guild.roles, name=target_role_name)
         if role:
             members_with_role = [member.id for member in guild.members if role in member.roles]
-            with open(member_list_file, "w") as file:
+            with open("datas/member_list.txt", "w") as file:
                 for member in members_with_role:
                     file.write(f"{member}\n")
             print(f"Member list saved to '{member_list_file}'.")
