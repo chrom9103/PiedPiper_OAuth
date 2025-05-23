@@ -13,11 +13,20 @@ intents.members = True
 intents.voice_states = True
 intents.message_content = True
 
-bot = commands.Bot(command_prefix="?", intents=intents)
+bot = commands.Bot(
+    command_prefix="?",
+    case_insensitive=True,
+    intents=intents
+)
 
 @bot.event
 async def on_ready():
-    print("Cleared to take off!")
+    print(f"Logged in as {bot.user.name}")
+    try:
+        synced = await bot.tree.sync()
+        print(f"Synced {len(synced)} command(s).")
+    except Exception as e:
+        print(f"Failed to sync commands: {e}")
 
 @bot.tree.command(name="mkivt", description="Create an invite link")
 async def mkivt(ctx: discord.Interaction):
@@ -95,11 +104,11 @@ async def add(ctx: discord.Interaction,role: str,member: discord.Member):
     except discord.HTTPException as e:
         await ctx.response.send_message(f"An error occurred: {e}", ephemeral=True)
 
-@bot.tree.command(name="ping", description="Check if bot is alive")
-async def ping(ctx: discord.Interaction):
-    if ctx.user.bot:
+@bot.command()
+async def ping(ctx):
+    if ctx.author.bot:
         return
     file = os.path.basename(__file__)
-    await ctx.response.send_message(f"pong [{file}]")
+    await ctx.reply(f"pong [{file}]")
 
 bot.run(token)
