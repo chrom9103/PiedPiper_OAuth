@@ -45,7 +45,7 @@ async def mkivt(ctx: discord.Interaction):
             ephemeral=True
         )
 
-    invite = await ctx.channel.create_invite(max_uses=1, max_age=60*60*24*30, reason=f"By {ctx.user.name}")
+    invite = await ctx.channel.create_invite(max_uses=1, max_age=60*60*24*7, reason=f"By {ctx.user.name}")
     await ctx.response.send_message(f"New invite link: {invite.url}")
     await ctx.followup.send(f"Invite ID:`{invite.id}` was created by {ctx.user.name}")
 
