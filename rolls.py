@@ -5,6 +5,7 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv('.env')
+load_dotenv('./datas/main_roleID.env')
 token = os.getenv("TOKEN")
 
 intents = discord.Intents.default()
@@ -37,8 +38,11 @@ async def mkivt(ctx: discord.Interaction):
         await ctx.response.send_message("You cannot use this command in this channel.", ephemeral=True)
         return
     
-    role_id = 1304058655502503977
+    role_id = int(os.getenv("administrator"))
     role = discord.utils.get(ctx.guild.roles, id=role_id)
+    if role is None:
+        await ctx.response.send_message("Specified role was not found.", ephemeral=True)
+        return
     if role not in ctx.user.roles:
         await ctx.response.send_message(
             f"Permission issue\n{role.mention}  {ctx.user.name} is creating an invite link.",
@@ -59,17 +63,17 @@ async def add(ctx: discord.Interaction,role: str,member: discord.Member):
     if ctx.user.bot:
         return
 
-    admin_role_id = 1304058655502503977
-    mentor_role_id = 1304077274278133810
+    admin_role_id = int(os.getenv("administrator"))
+    mentor_role_id = int(os.getenv("mentor"))
     admin_role = discord.utils.get(ctx.guild.roles, id=admin_role_id)
     mentor_role = discord.utils.get(ctx.guild.roles, id=mentor_role_id)
 
     seminar_list = [
-        1371796031318130799,  # Unity
-        1371795945859186831,  # web創作
-        1305402941125038154,  # 課題解決
-        1305402751689162835,  # 機械学習
-        1371799262534303844   # discord-bot
+        int(os.getenv("Unity")),
+        int(os.getenv("web創作")),
+        int(os.getenv("課題解決")),
+        int(os.getenv("機会学習")),
+        int(os.getenv("discod-bot"))
     ]
 
     target_role = discord.utils.get(ctx.guild.roles, name=role)
