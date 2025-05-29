@@ -91,6 +91,10 @@ async def add(ctx: discord.Interaction,role: str,member: discord.Member):
             premember_role = discord.utils.get(ctx.guild.roles, name="pre-member")
             await member.add_roles(target_role)
             await member.remove_roles(premember_role)
+            with open("datas/member_list.txt", "a") as log_file:
+                log_file.write(f"{member}\n")
+            with open("datas/member_add_log.txt", "a") as log_file:
+                log_file.write(f"{member.name} by {ctx.user.name}\n")
             print(f"Added {member.name} to {target_role.name}.")
 
         elif target_role and target_role.id in seminar_list:
