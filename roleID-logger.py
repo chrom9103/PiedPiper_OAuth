@@ -2,7 +2,7 @@ import discord
 from discord import app_commands
 from discord.ext import commands
 import os
-from dotenv import load_dotenv
+from dotenv import dotenv_values, load_dotenv
 
 load_dotenv('.env')
 token = os.getenv("TOKEN")
@@ -19,11 +19,8 @@ bot = commands.Bot(
     intents=intents
 )
 
-# サーバー名とIDの辞書
-guilds_info = {
-    "main": 1304058364560543815,
-    "expt": 1372020363831017626
-}
+guilds_info = dotenv_values("./datas/guildID.env")
+guilds_info = {key: int(value) for key, value in guilds_info.items()}
 
 @bot.event
 async def on_ready():
@@ -39,7 +36,7 @@ async def on_ready():
                 continue  # @everyoneは除外
             lines.append(f"{role.name} = {role.id}")
 
-        file_path = f"./datas/{guild_name}_roleID.env"
+        file_path = f"./datas/{guild_name}_ID.env"
         with open(file_path, "w", encoding="utf-8") as f:
             f.write("\n".join(lines))
 
