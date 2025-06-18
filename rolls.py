@@ -37,17 +37,6 @@ async def mkivt(ctx: discord.Interaction):
     if ctx.channel.id != 1342861713300521051:
         await ctx.response.send_message("You cannot use this command in this channel.", ephemeral=True)
         return
-    
-    role_id = int(os.getenv("administrator"))
-    role = discord.utils.get(ctx.guild.roles, id=role_id)
-    if role is None:
-        await ctx.response.send_message("Specified role was not found.", ephemeral=True)
-        return
-    if role not in ctx.user.roles:
-        await ctx.response.send_message(
-            f"Permission issue\n{role.mention}  {ctx.user.name} is creating an invite link.",
-            ephemeral=True
-        )
 
     invite = await ctx.channel.create_invite(max_uses=1, max_age=60*60*24*7, reason=f"By {ctx.user.name}")
     await ctx.response.send_message(f"New invite link: {invite.url}")
