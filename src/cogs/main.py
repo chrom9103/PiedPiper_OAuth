@@ -90,15 +90,6 @@ class RoleManager(commands.Cog):
         else:
             print(f"Guild with ID {target_guild_id} not found.")
 
-    @commands.command()
-    async def ping(self, ctx: commands.Context):
-        """Simple health command."""
-        if ctx.author.bot:
-            return
-        file = os.path.basename(__file__)
-        await ctx.reply(f"pong [{file} ")
-
-
 async def setup(bot: commands.Bot):
     # discord.py v2-style async setup for extensions
     await bot.add_cog(RoleManager(bot))

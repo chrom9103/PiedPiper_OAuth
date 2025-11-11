@@ -121,14 +121,6 @@ class RollsCog(commands.Cog):
         except Exception as e:
             print(f"Failed to sync commands: {e}")
 
-    @commands.command()
-    async def ping(self, ctx: commands.Context):
-        if ctx.author.bot:
-            return
-        file = os.path.basename(__file__)
-        await ctx.reply(f"pong [{file}]")
-
-
 async def setup(bot: commands.Bot):
     # Register cog and app commands
     await bot.add_cog(RollsCog(bot))
