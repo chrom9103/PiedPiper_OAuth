@@ -1,3 +1,4 @@
 .env
 /datas
 *.tar
+bot-env
